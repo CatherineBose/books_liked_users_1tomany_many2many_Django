@@ -1,0 +1,66 @@
+'''
+from apps.likedBooks.models import *
+User.objects.create(first_name="Isaac",last_name="Newton",email="INewton@gmail.com")
+User.objects.create(first_name="Ike",last_name="Nissan",email="INissan@gmail.com")
+User.objects.create(first_name="Nancy",last_name="Drew",email="INancy@gmail.com")
+User.objects.create(first_name="Nanu",last_name="Nanekar",email="Nanekar@gmail.com")
+
+-------------
+Have the first user create 2 books.
+user1 = User.objects.first()
+Book.objects.create(name="Django", desc="Django is a framework", uploader= user1)
+Book.objects.create(name="Spring", desc="Spring is a framework", uploader=user1 )
+
+-------------
+Have the second user create 2 other books.
+user2 = User.objects.get(id = 2)
+Book.objects.create(name="Hibernate", desc="Hibernate is a framework", uploader= user2)
+Book.objects.create(name="REST", desc="REST is a framework", uploader = user2 )
+-----------
+Have the third user create 2 other books.
+user3 = User.objects.get(id = 3)
+Book.objects.create(name="Angular", desc="Angular is a framework", uploader= user3)
+Book.objects.create(name="React", desc="React is a framework", uploader = user3 )
+---------
+Have the first user like the last book and the first book
+user1 = User.objects.first()
+book1 = Book.objects.first()
+book2 = Book.objects.last()
+user1.liked_books.add(book1, book2)
+-------
+Have the second user like the first book and the third book
+user2 = User.objects.get(id=2)
+book1 = Book.objects.first()
+book3 = Book.objects.get(id=3)
+user2.liked_books.add(book1, book3)
+
+--------
+Have the third user like all books
+user3 = User.objects.get(id=3)
+book1 = Book.objects.first()
+book2 = Book.objects.get(id=2)
+book3 = Book.objects.get(id=3)
+book4 = Book.objects.get(id=4)
+book5 = Book.objects.get(id=5)
+book6 = Book.objects.last()
+user3.liked_books.add(book1, book2, book3, book4, book5, book6)
+
+----------
+Display all users who like the first book
+book1 = Book.objects.first()
+book1.liked_users.all()
+
+--------
+Display the user who uploaded the first book
+book1 = Book.objects.first()
+book1.uploader
+------
+Display all users who like the second book
+book2 = Book.objects.get(id=2)
+book2.liked_users.all()
+User.objects.filter(liked_books_id__contains = "2")
+
+--------
+Display the user who uploaded the second book
+book2 = Book.objects.get(id=2)
+book2.uploader
